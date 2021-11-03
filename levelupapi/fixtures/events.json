@@ -1,0 +1,14 @@
+[
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "game": 1,
+            "description": "It's a monopoly party",
+            "date": "2021-12-01",
+            "time": "06:30:00",
+            "organizer": 1,
+            "attendees": [1]
+        }
+    }
+]

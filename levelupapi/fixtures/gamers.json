@@ -1,0 +1,43 @@
+[
+    {
+        "model": "levelupapi.gamer",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "Me"
+        }
+    },
+    {
+        "model": "levelupapi.gamer",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "bio": "You"
+        }
+    },
+    {
+        "model": "levelupapi.gamer",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "bio": "Him"
+        }
+    },
+    {
+        "model": "levelupapi.gamer",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "bio": "Her"
+        }
+    },
+    {
+        "model": "levelupapi.gamer",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "bio": "Them"
+        }
+    }
+
+]

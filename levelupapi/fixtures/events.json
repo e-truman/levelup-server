@@ -10,5 +10,17 @@
             "organizer": 1,
             "attendees": [1]
         }
+    },
+    {
+        "model": "levelupapi.event",
+        "pk": 2,
+        "fields": {
+            "game": 2,
+            "description": "Diners, Dungeons, drive-ins, Dragons and Dives!",
+            "date": "2021-12-01",
+            "time": "06:30:00",
+            "organizer": 1,
+            "attendees": [1]
+        }
     }
 ]

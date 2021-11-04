@@ -69,9 +69,10 @@ class EventView(ViewSet):
             # The `2` at the end of the route becomes `pk`
             event = Event.objects.get(pk=pk)
             serializer = EventSerializer(event, context={'request': request})
-            return Response(serializer.data)
+            #packages data to send back using event serializer at bottom, names it as serializer. result of method call is what is on variable. calling eventserializer and passing in parameters
+            return Response(serializer.data) #calling response- a class. passing in the data
         except Exception as ex:
-            return HttpResponseServerError(ex)
+            return HttpResponseServerError(ex) #catches all errors, but want to be specific. can tell what to tell client based on why things not working
 
     def update(self, request, pk=None):
         """Handle PUT requests for a game
@@ -80,19 +81,17 @@ class EventView(ViewSet):
             Response -- Empty body with 204 status code
         """
         gamer = Gamer.objects.get(user=request.auth.user)
-
+        event = Event.objects.get(pk=pk)
         # Do mostly the same thing as POST, but instead of
         # creating a new instance of Game, get the game record
         # from the database whose primary key is `pk`
-        event.game=Event.object.get(pk=request.data["gameId"]),
-        event.organizer=Gamer.objects.get(user=request.auth.user),
-        event.description=request.data["description"],
-        event.date=request.data["date"],
-        event.time=request.data["time"], 
+        game=Game.objects.get(pk=request.data["gameId"])
+        event.game=game
+        event.organizer=Gamer.objects.get(user=request.auth.user)
+        event.description=request.data["description"]
+        event.date=request.data["date"]
+        event.time=request.data["time"]  
         
-
-        game_type = GameType.objects.get(pk=request.data["gameTypeId"])
-        game.game_type = game_type
         event.save()
 
         # 204 status code means everything worked but the
@@ -130,12 +129,12 @@ class EventView(ViewSet):
         #    http://localhost:8000/games?type=1
         #
         # That URL will retrieve all tabletop games
-        event = self.request.query_params.get('game', None)
-        if event is not None:
-            events = events.filter(game=game_id)
+        game = self.request.query_params.get('game', None) #none is a default value
+        if game is not None:
+            events = events.filter(game__id=game) #filtering by game ids
 
         serializer = EventSerializer(
-            events, many=True, context={'request': request})
+            events, many=True, context={'request': request}) #add many=true if you get more than one response
         return Response(serializer.data)
 
 class UserSerializer(serializers.ModelSerializer):

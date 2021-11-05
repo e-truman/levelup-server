@@ -145,7 +145,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('id', 'firstName')
+        fields = ('firstName', 'lastName')
         depth = 1
 
 class GamerSerializer(serializers.ModelSerializer):
@@ -155,7 +155,7 @@ class GamerSerializer(serializers.ModelSerializer):
         serializer type
     """
     class Meta:
-        model = Event
+        model = Gamer
         fields = ('id', 'user', 'bio')
         depth = 1
 
@@ -177,6 +177,7 @@ class EventSerializer(serializers.ModelSerializer):
     Arguments:
         serializer type
     """
+    organizer= GamerSerializer()
     class Meta:
         model = Event
         fields = ('id', 'game', 'organizer', 'description', 'date', 'time')

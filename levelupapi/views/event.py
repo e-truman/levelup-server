@@ -123,16 +123,23 @@ class EventView(ViewSet):
         Returns:
             Response -- JSON serialized list of games
         """
+        # Get the current authenticated user
+        gamer = Gamer.objects.get(user=request.auth.user)
         # Get all game records from the database
         events = Event.objects.all()
+
+        # Set the `joined` property on every event
+        for event in events:
+            # Check to see if the gamer is in the attendees list on the event
+            event.joined = gamer in event.attendees.all()
 
         # Support filtering games by type
         #    http://localhost:8000/games?type=1
         #
         # That URL will retrieve all tabletop games
-        game = self.request.query_params.get('game', None) #none is a default value
+        game = self.request.query_params.get('gameId', None) #none is a default value
         if game is not None:
-            events = events.filter(game__id=game) #filtering by game ids
+            events = events.filter(game__id=type) #filtering by game ids
 
         serializer = EventSerializer(
             events, many=True, context={'request': request}) #add many=true if you get more than one response
@@ -216,8 +223,10 @@ class EventSerializer(serializers.ModelSerializer):
     Arguments:
         serializer type
     """
+    # if you have other variables outside the Meta class just add this line
+    joined = serializers.BooleanField(required=False)
     organizer= GamerSerializer()
     class Meta:
         model = Event
-        fields = ('id', 'game', 'organizer', 'description', 'date', 'time')
+        fields = ('id', 'game', 'organizer', 'description', 'date', 'time', 'attendees', 'joined')
         depth = 1

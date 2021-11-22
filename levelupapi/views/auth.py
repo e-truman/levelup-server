@@ -65,5 +65,5 @@ def register_user(request):
     token = Token.objects.create(user=gamer.user)
     # Return the token to the client
     data = { 'token': token.key }
-    return Response(data)
+    return Response(data, status=201)
 
